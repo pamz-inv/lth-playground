@@ -1,0 +1,19 @@
+def get_cummprofit(stock):
+	bs = requests.get('https://[webseturl]/api/set/factsheet/{}/financialstatement?accountType=balance_sheet&lang=th'.format(stock))
+	txt1 = "-"
+	txt2 = "-"
+	try:
+		for i in bs.json()[0]['accounts']:
+			if i['accountName'] == "กำไร(ขาดทุน)สะสม":
+				txt1 = i['amount']
+				break
+		for i in bs.json()[4]['accounts']:
+			if i['accountName'] == "กำไร(ขาดทุน)สะสม":
+				txt2 = i['amount']
+				break
+	except:
+		txt1 = "error"
+	print("{}#{}#{}".format(stock, txt1, txt2))
+#####################################
+eg.
+>> get_cummprofit('SUN')
